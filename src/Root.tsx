@@ -148,39 +148,7 @@ export function Root() {
   };
 
   useEffect(() => {
-    const loadInitialPokemon = async () => {
-      setLoading(true);
-      try {
-        const pokemonData = await Promise.all(
-          legendaryPokemonIds.slice(0, 20).map(async (id: number) => {
-            try {
-              const pokemon = await PokeAPI.getPokemonById(id);
-              return {
-                id: pokemon.id,
-                image: pokemon.sprites.other?.["official-artwork"].front_default ?? "",
-                name: pokemon.name,
-                types: pokemon.types.map((type: any) => type.type.name),
-                fullStats: pokemon.stats?.map((stat: any) => ({
-                  name: stat.stat.name,
-                  value: stat.base_stat,
-                })) || [],
-              };
-            } catch (error) {
-              console.error(`Error fetching pokemon ${id}:`, error);
-              return null;
-            }
-          }),
-        );
-        const validPokemon = pokemonData.filter((p) => p !== null);
-        setPokemons(validPokemon);
-        setLoadedCount(20);
-      } catch (error) {
-        console.error("Error fetching legendary pokemons:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadInitialPokemon();
+    // Non carica nulla all'inizio
   }, []);
 
   useEffect(() => {
