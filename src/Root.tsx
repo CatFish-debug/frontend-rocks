@@ -105,6 +105,12 @@ export function Root() {
         name="Palkia"
         types={["water", "dragon"]}
       />
+      <PokemonCard
+        id={483} // Dialga national pokédex number
+        image="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/483.png"
+        name="Dialga"
+        types={["steel", "dragon"]}
+      />
     </div>
   );
 }
