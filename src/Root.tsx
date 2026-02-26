@@ -1,6 +1,6 @@
 /*import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import { PokeAPI } from "./api";
+importfah { PokeAPI } from "./api";
 */
 
 import { useState, useEffect } from "react";
