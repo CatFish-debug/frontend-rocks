@@ -10,6 +10,51 @@ interface Props {
   types: string[];
 }
 
+// pokemon-style card variant for highlighting specific pokemon
+export const PokemonCard: React.FC<Props> = ({ id, image, name, types }) => {
+  const mainType = types[0] || "normal";
+  const borderColor = (typeColors[mainType] || "bg-gray-300").replace("bg-", "border-");
+
+  return (
+    <div
+      className={
+        `relative w-60 h-80 bg-white border-4 ${borderColor} rounded-lg shadow-lg overflow-hidden`
+      }
+    >
+      {/* header: name left, id and primary type right */}
+      <div className="absolute top-0 w-full bg-gray-100 px-3 py-1 flex justify-between items-center">
+        <span className="font-bold text-lg capitalize truncate">{name}</span>
+        <div className="flex items-center space-x-2">
+          <span className="text-sm font-semibold">#{id}</span>
+          <span className={`text-xs font-bold text-white px-1 py-0.5 rounded ${getTypeColor(mainType)}`}>{mainType}</span>
+        </div>
+      </div>
+
+      {/* artwork area */}
+      <div className="absolute top-12 left-0 right-0 bottom-24 flex justify-center items-center">
+        <img
+          src={image}
+          alt={name}
+          className="max-h-40 object-contain"
+        />
+      </div>
+
+      {/* types badges at bottom center */}
+      <div className="absolute bottom-1 w-full flex justify-center space-x-2">
+        {types.map((type) => (
+          <span
+            key={type}
+            className={`font-bold text-white px-2 py-1 rounded text-xs ${getTypeColor(type)}`}
+          >
+            {type}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+
 export const Card: React.FC<Props> = (props) => (
   <div className="bg-white border border-gray-300 rounded-lg shadow-md relative w-2xs flex items-center justify-center h-80">
     <h4 className="text-xl text-gray-900 tracking-wide font-bold absolute left-4 top-2">
@@ -37,13 +82,31 @@ export const Card: React.FC<Props> = (props) => (
     </div>
   </div>
 );
+
 export function Root() {
-  return <Card
-    id={1}
-    image="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/486.png"
-    name="Regigas"
-    types={["s"]}
-    />
+  // display Regigas and Arceus side-by-side with the same styling
+  return (
+    <div className="p-8 flex flex-wrap gap-6 justify-start">
+      <PokemonCard
+        id={486} // Regigas national pokédex number
+        image="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/486.png"
+        name="Regigas"
+        types={["normal"]}
+      />
+      <PokemonCard
+        id={493} // Arceus national pokédex number
+        image="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/493.png"
+        name="Arceus"
+        types={["normal"]}
+      />
+      <PokemonCard
+        id={484} // Palkia national pokédex number
+        image="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/484.png"
+        name="Palkia"
+        types={["water", "dragon"]}
+      />
+    </div>
+  );
 }
 function getTypeColor(type: string): string {
   return typeColors[type];
